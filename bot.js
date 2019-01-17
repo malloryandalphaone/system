@@ -9,7 +9,7 @@ const wait = require('util').promisify(setTimeout);
 client.on("ready", () => {
 client.user.setStatus('dnd');
   console.log("Reeebel | Logged in! Server count: ${client.guilds.size}");
-  client.user.setActivity("System.",{type: 'LISTENING'});
+  client.user.setActivity("Officials.",{type: 'LISTENING'});
 });
 
 if (!prefix) {
@@ -37,7 +37,7 @@ client.on('message', msg => {
 
 const devs = ["518113766915702789"]// ايدي الخاص بحسابك
  
-const adminprefix = "!";//Narox
+const adminprefix = "2!";//Narox
 client.on('message', message => {
     var argresult = message.content.split(` `).slice(1).join(' ');
       if (!devs.includes(message.author.id)) return;
