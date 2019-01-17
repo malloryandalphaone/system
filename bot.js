@@ -32,7 +32,47 @@ client.on('message', msg => {
 })
 
 
-
+client.on('messageDelete', message => {
+    if(message.author.bot) return;
+    if(message.channel.type === 'dm') return;
+    if(!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return;
+    if(!message.guild.member(client.user).hasPermission('MANAGE_MESSAGES')) return;
+ 
+    var logChannel = message.guild.channels.find(c => c.name === 'system');
+    if(!logChannel) return;
+ 
+    let messageDelete = new Discord.RichEmbed()
+    .setTitle('**MESSAGE DELETE**')
+    .setColor('WHITE')
+    .setThumbnail(message.author.avatarURL)
+    .setDescription(`**\n**:wastebasket: Successfully \`\`DELETE\`\` **MESSAGE** In ${message.channel}\n\n**Channel:** \`\`${message.channel.name}\`\` (ID: ${message.channel.id})\n**Message ID:** ${message.id}\n**Sent By:** <@${message.author.id}> (ID: ${message.author.id})\n**Message:**\n\`\`\`${message}\`\`\``)
+    .setTimestamp()
+    .setFooter(message.guild.name, message.guild.iconURL)
+ 
+    logChannel.send(messageDelete);
+});
+client.on('messageUpdate', (oldMessage, newMessage) => {
+ 
+    if(oldMessage.author.bot) return;
+    if(!oldMessage.channel.type === 'dm') return;
+    if(!oldMessage.guild.member(client.user).hasPermission('EMBED_LINKS')) return;
+    if(!oldMessage.guild.member(client.user).hasPermission('MANAGE_MESSAGES')) return;
+ 
+    var logChannel = oldMessage.guild.channels.find(c => c.name === 'system');
+    if(!logChannel) return;
+ 
+    if(oldMessage.content.startsWith('https://')) return;
+ 
+    let messageUpdate = new Discord.RichEmbed()
+    .setTitle('**MESSAGE EDIT**')
+    .setThumbnail(oldMessage.author.avatarURL)
+    .setColor('WHITE')
+    .setDescription(`**\n**:wrench: Successfully \`\`EDIT\`\` **MESSAGE** In ${oldMessage.channel}\n\n**Channel:** \`\`${oldMessage.channel.name}\`\` (ID: ${oldMessage.channel.id})\n**Message ID:** ${oldMessage.id}\n**Sent By:** <@${oldMessage.author.id}> (ID: ${oldMessage.author.id})\n\n**Old Message:**\`\`\`${oldMessage}\`\`\`\n**New Message:**\`\`\`${newMessage}\`\`\``)
+    .setTimestamp()
+    .setFooter(oldMessage.guild.name, oldMessage.guild.iconURL)
+ 
+    logChannel.send(messageUpdate);
+});
 
 
 const devs = ["518113766915702789"]// ايدي الخاص بحسابك
