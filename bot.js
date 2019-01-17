@@ -7,7 +7,7 @@ const ms = require("ms");
 const wait = require('util').promisify(setTimeout);
 
 client.on("ready", () => {
-client.user.setStatus('dnd');
+client.user.setStatus('idle');
   console.log("Reeebel | Logged in! Server count: ${client.guilds.size}");
   client.user.setActivity("Officials.",{type: 'LISTENING'});
 });
